@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/d51cb64351dad6f50a890d8cd2ddb2c2a90e3104/busboy/busboy.d.ts",
+    "raw": "registry:dt/busboy#0.2.13+20160915132440",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/d51cb64351dad6f50a890d8cd2ddb2c2a90e3104/busboy/busboy.d.ts"
+  }
+}
