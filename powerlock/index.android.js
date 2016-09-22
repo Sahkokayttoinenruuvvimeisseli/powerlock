@@ -17,7 +17,7 @@ class powertool extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React asdasdasdadsaasdadsads Nativeeeee!
+          Welcome to React Native!
         </Text>
         <Text style={styles.instructions}>
           To get started, edit index.android.js
