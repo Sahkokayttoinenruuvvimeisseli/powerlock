@@ -1,0 +1,9 @@
+{
+  "name": "powerlock",
+  "version": "0.0.0",
+  "description": "powerlock",
+  "main": "app.js",
+  "author": {
+    "name": "pusan"
+  }
+}
