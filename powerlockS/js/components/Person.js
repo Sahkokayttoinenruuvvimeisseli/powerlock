@@ -6,6 +6,8 @@ var NavLayout = require("./NavLayout");
 import { UploadManager } from 'react-file-uploader';
 import { Receiver } from 'react-file-uploader';
 import { UploadHandler } from 'react-file-uploader';
+import PageLayout from './PageLayout';
+import Select from 'react-select';
 
 class Person extends React.Component {
     constructor(props) {
@@ -16,6 +18,7 @@ class Person extends React.Component {
             Firstname: "",
             Lastname: "",
             Tag: "",
+            Selectedtools: [],
             tagChooserExpanded: false
         }
         if (this.state.Personid) {
@@ -40,7 +43,8 @@ class Person extends React.Component {
                 if (data.data.Person) {
                     that.setState({
                         Firstname: data.data.Person[0].Firstname,
-                        Lastname: data.data.Person[0].Lastname
+                        Lastname: data.data.Person[0].Lastname,
+                        Tag: data.data.Person[0].Tag
                     });
                 }
             });
@@ -188,30 +192,58 @@ class Person extends React.Component {
 
     }
 
+    toolsChange(e) {
+        console.log(e);
+
+        this.setState({
+            Selectedtools: e
+        });
+
+    }
+
     render() {
 
+        var options = [
+            {
+                value: 1,
+                label: "Vasara"
+            },
+            {
+                value: 2,
+                label: "Saha"
+            }
+        ];
+
         return (
-            <div style={{ width: "50%" }} >
-                <NavLayout />
-                
-                    <input className="form-control" type="text" placeholder="Etunimi" value={this.state.Firstname} onChange={this.changeFirstName.bind(this) } />
-                    <input className="form-control" type="text" placeholder="Sukunimi" value={this.state.Lastname} onChange={this.changeLastName.bind(this) } />
-                    <input className="form-control" type="text" placeholder="Tag" value={this.state.Tag} onChange={this.changeTag.bind(this) } />
-                    <form action="upload" method="POST" encType="multipart/form-data">
-                        <input name="userPhoto" type="file" />
-                        <input type="text" name="personId" value={this.state.Personid} hidden />
-                        <input type="submit"/>
-                    </form>
-                    <UploadManager uploadUrl="/upload"  uploadHeader={<h1>asd</h1>} onUploadEnd={this.handleOnUploadEnd}  />
-                    <Receiver isOpen={true} onDragOver={this.handleOnDragOver} onDragEnter={this.handleOnDragEnter} onDragLeave={this.handleOnDragLeave} onFileDrop={this.handleOnFileDrop}>
-                        <div>asd</div>
-                    </Receiver>
-                    
+            <PageLayout header="Person" style={{ width: "50%" }} >
+                <input className="form-control" type="text" placeholder="Etunimi" value={this.state.Firstname} onChange={this.changeFirstName.bind(this) } />
+                <input className="form-control" type="text" placeholder="Sukunimi" value={this.state.Lastname} onChange={this.changeLastName.bind(this) } />
+                <input className="form-control" type="text" placeholder="Tag" value={this.state.Tag} onChange={this.changeTag.bind(this) } />
+                <h5>Työkalut joita henkilö saa käyttää.</h5>
+                <div>
+                    <Select
+                        name="form-field-name"
+                        value={this.state.Selectedtools}
+                        options={options}
+                        onChange={this.toolsChange.bind(this)} multi={true}
+                        />
+                </div>
                 <Button style={{ width: "50%" }} onClick={this.handleSave.bind(this) }>Tallenna</Button>
                 <Button style={{ width: "50%" }} onClick={this.removePerson.bind(this) }>Poista</Button>
-            </div>
+            </PageLayout>
         )
     }
 }
 
 module.exports = Person;
+
+
+//<form action="upload" method="POST" encType="multipart/form-data">
+//    <input name="userPhoto" type="file" />
+//    <input type="text" name="personId" value={this.state.Personid} hidden />
+//    <input type="submit"/>
+//</form>
+//    <UploadManager uploadUrl="/upload"  uploadHeader={<h1>asd</h1>} onUploadEnd={this.handleOnUploadEnd}  />
+//    <Receiver isOpen={true} onDragOver={this.handleOnDragOver} onDragEnter={this.handleOnDragEnter} onDragLeave={this.handleOnDragLeave} onFileDrop={this.handleOnFileDrop}>
+//        <div>asd</div>
+//    </Receiver>

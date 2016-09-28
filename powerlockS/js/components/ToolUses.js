@@ -1,5 +1,6 @@
 ﻿import React from 'react';
-var NavLayout = require("./NavLayout");
+import PageLayout from './PageLayout';
+
 var Link = require('react-router').Link;
 
 class ToolUses extends React.Component {
@@ -33,11 +34,9 @@ class ToolUses extends React.Component {
 
     render() {
         return (
-            <div>
-                <h4>Leimaukset</h4>
-                <NavLayout />
+            <PageLayout header="Leimaukset">
                 <ToolUseList Tooluses={this.state.Tooluses} />
-            </div>
+            </PageLayout>
         )
     }
 }
@@ -57,6 +56,7 @@ class ToolUseList extends React.Component {
         return (
             <div>
                 {rows}
+                <div style={{ clear: "both" }} />
             </div>
         )
     }
@@ -70,7 +70,7 @@ class ToolUseListItem extends React.Component {
     render() {
         var link = "/Tooluse/" + this.props.Tooluse.Id;
         return (
-            <Link to={link}>
+            <Link to={link} style={{ textDecoration: "none", float: "left", margin: "20px" }}>
                 <div>Etunimi: {this.props.Tooluse.Person.Firstname}</div>
                 <div>Sukunimi: {this.props.Tooluse.Person.Lastname}</div>
                 <div>Tyokalunnimi: {this.props.Tooluse.Tool.Name}</div>

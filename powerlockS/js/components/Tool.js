@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import PageLayout from './PageLayout';
 var Button = require('react-bootstrap').Button;
 var NavLayout = require("./NavLayout");
 
@@ -112,12 +113,11 @@ class Tool extends React.Component {
 
     render() {
         return (
-            <div>
-                <NavLayout />
+            <PageLayout header="Työkalu">
                 <input className="form-control" type="text" placeholder="Nimi" value={this.state.Name} onChange={this.changeName.bind(this) } />
                 <Button style={{ width: "50%" }} onClick={this.handleSave.bind(this) }>Tallenna</Button>
-                <Button style={{ width: "50%" }} onClick={this.removeTool.bind(this) }>Poista</Button>
-            </div>
+                <Button style={{ width: "50%" }} onClick={this.removeTool.bind(this) }>Poista</Button>                
+            </PageLayout>
         )
     }
 }

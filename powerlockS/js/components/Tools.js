@@ -1,4 +1,6 @@
 ﻿import React from 'react';
+import PageLayout from './PageLayout';
+
 var Link = require('react-router').Link;
 var Button = require('react-bootstrap').Button;
 var NavLayout = require("./NavLayout");
@@ -30,14 +32,12 @@ class Tools extends React.Component {
     render() {
 
         return (
-            <div>
-                <h1>Työkalu</h1>
-                <NavLayout />
+            <PageLayout header="Työkalut">
                 <ToolList Tools={this.state.Tools} />
                 <Link to={"/Tool"}>
                     <Button>Luo uusi työkalu</Button>
                 </Link>
-            </div>
+            </PageLayout>
         )
     }
 }
@@ -56,6 +56,7 @@ class ToolList extends React.Component {
         return (
             <div>
                 {rows}
+                <div style={{ clear: "both" }} />
             </div>
         )
     }
@@ -69,7 +70,7 @@ class ToolListItem extends React.Component {
     render() {
         var link = "/Tool/" + this.props.Tool.Id;
         return (
-            <Link to={link} >
+            <Link to={link} style={{ textDecoration: "none", float: "left", margin: "20px" }} >
                 <div>
                     Nimi: {this.props.Tool.Name}
                 </div>

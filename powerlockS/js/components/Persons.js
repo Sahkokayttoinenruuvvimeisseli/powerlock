@@ -5,7 +5,8 @@ var Button = require('react-bootstrap').Button;
 var Table = require('react-bootstrap').Table;
 var Link = require('react-router').Link;
 var FormControl = require('react-bootstrap').FormControl;
-var NavLayout = require("./NavLayout");
+
+import PageLayout from './PageLayout';
 
 class Persons extends React.Component {
     constructor(props) {
@@ -57,12 +58,10 @@ class Persons extends React.Component {
         rows.push(<h1 key={5}>moi</h1>);
         
         return (
-            <div>
-                <h1>Henkilöt</h1>
-                <NavLayout />
+            <PageLayout header="Henkilöt">
                 <PersonList selectedPersonId={this.state.selectedPersonId} Persons={this.state.Persons} onPersonSelected={this.personSelected.bind(this)}/>
                 <Link style={{ clear: "both" }} to={"/person"}><Button>Luo uusi henkilö</Button></Link>
-            </div>
+            </PageLayout>
         )
     }
 }

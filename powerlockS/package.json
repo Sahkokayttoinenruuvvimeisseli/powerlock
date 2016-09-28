@@ -32,7 +32,8 @@
     "multer": "1.2.0",
     "express-fileupload": "0.0.5",
     "react-file-uploader": "0.3.3",
-    "body-parser": "1.15.2"
+    "body-parser": "1.15.2",
+    "react-select": "1.0.0-rc.2"
   },
 		"devDependencies": {
 		"babel-cli": "6.11.4"

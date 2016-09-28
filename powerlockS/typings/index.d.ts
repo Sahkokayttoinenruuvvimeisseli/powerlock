@@ -32,6 +32,7 @@
 /// <reference path="globals/react-dom/index.d.ts" />
 /// <reference path="globals/react-responsive/index.d.ts" />
 /// <reference path="globals/react-router/index.d.ts" />
+/// <reference path="globals/react-select/index.d.ts" />
 /// <reference path="globals/react/index.d.ts" />
 /// <reference path="globals/sequelize/index.d.ts" />
 /// <reference path="globals/statuses/index.d.ts" />

@@ -37,7 +37,11 @@
     <Compile Include="data\schema.js" />
     <Compile Include="js\app.js" />
     <Compile Include="js\components\app.js" />
+    <Compile Include="js\components\Footer.js" />
+    <Compile Include="js\components\Header.js" />
+    <Compile Include="js\components\MainNavigation.js" />
     <Compile Include="js\components\NavLayout.js" />
+    <Compile Include="js\components\PageLayout.js" />
     <Compile Include="js\components\Person.js" />
     <Compile Include="js\components\Persons.js" />
     <Compile Include="js\components\TagChooser.js" />
@@ -91,6 +95,7 @@
     <Folder Include="typings\globals\react-dom\" />
     <Folder Include="typings\globals\react-responsive\" />
     <Folder Include="typings\globals\react-router\" />
+    <Folder Include="typings\globals\react-select\" />
     <Folder Include="typings\globals\react\" />
     <Folder Include="typings\globals\sequelize\" />
     <Folder Include="typings\globals\statuses\" />
@@ -132,6 +137,7 @@
     <TypeScriptCompile Include="typings\globals\react-dom\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\react-responsive\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\react-router\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\react-select\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\react\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\sequelize\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\statuses\index.d.ts" />

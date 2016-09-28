@@ -32,6 +32,14 @@ var Person = new GraphQLObjectType({
         },
         Tag: {
             type: GraphQLString
+        },
+        Tools: {
+            type: new GraphQLList(Tool),
+            resolve: function (obj) {
+                return new Promise() {
+
+                }
+            }
         }
     }
 });
@@ -270,7 +278,7 @@ const queryType = new GraphQLObjectType({
         ToolUses: {
             type: new GraphQLList(ToolUse),
             args: {
-                Tooluseid: {
+                Tooluseid: { 
                     type: GraphQLInt
                 }
             },

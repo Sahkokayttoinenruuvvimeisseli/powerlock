@@ -13,19 +13,18 @@ import {
 } from 'react-native';
 
 class powertool extends Component {
+    handleClick() {
+
+    }
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          React native on parass !!!
         </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Jarmonmeisseli
-         
-        </Text>
+        <button>
+            Nappi
+        </button>
       </View>
     );
   }
