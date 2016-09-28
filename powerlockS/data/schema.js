@@ -17,6 +17,17 @@
 
 var dbSchema = require("./dbSchema");
 
+var Tool = new GraphQLObjectType({
+    name: "Tool",
+    fields: {
+        Id: {
+            type: GraphQLInt
+        },
+        Name: {
+            type: GraphQLString
+        }
+    }
+});
 
 var Person = new GraphQLObjectType({
     name: 'Person',
@@ -36,25 +47,36 @@ var Person = new GraphQLObjectType({
         Tools: {
             type: new GraphQLList(Tool),
             resolve: function (obj) {
-                return new Promise() {
-
-                }
+ 
+                return new Promise(function (resolve, reject) {
+                    dbSchema.PersonTools.findAll({
+                        where: {
+                            Personid: obj.dataValues.Id
+                        }
+                    }).then(function (tools) {
+                        console.log(tools);
+                        resolve(tools);
+                    });
+                });
+            }
+        },
+        Tooluses: {
+            type: new GraphQLList(Tool),
+            resolve: function (obj) {
+                return new Promise(function (resolve, reject) {
+                    dbSchema.Tooluses.findAll({
+                        where: {
+                            Id: obj.dataValues.Person_id
+                        }
+                    }).then(function (tools) {
+                        resolve(tools);
+                    });
+                });
             }
         }
     }
 });
 
-var Tool = new GraphQLObjectType({
-    name: "Tool",
-    fields: {
-        Id: {
-            type: GraphQLInt
-        },
-        Name: {
-            type: GraphQLString
-        }
-    }
-});
 
 var ToolUse = new GraphQLObjectType({
     name: "ToolUse",
@@ -332,6 +354,72 @@ const queryType = new GraphQLObjectType({
                         }
                     });
                 });
+            }
+        },
+        InsertPersonTool: {
+            type: GraphQLString,
+            args: {
+                Toolid: {
+                    type: GraphQLInt
+                },
+                Personid: {
+                    type: GraphQLInt
+                }
+            }, 
+            resolve: function (_, args) {
+                return new Promise(function (resolve, reject) {
+                    if (args.Toolid && args.Personid) {
+                        dbSchema.Tool.findAndCount({
+                            Id: args.Toolid
+                        }).then(function (data) {
+                            if (data.count > 0) {
+                                dbSchema.Person.findAndCount({
+                                    Id: args.Personid
+                                }).then(function (data2) {
+                                    if (data2.count > 0) {
+                                        dbSchema.PersonTools.create({
+                                            Personid: args.Personid,
+                                            Toolid: args.Toolid
+                                        }).then(function (data) {
+                                            resolve("onnistui");
+                                        });
+                                    } else {
+                                        resolve("Henkilöä ei löytynyt");
+                                    }
+                                });
+                            } else {
+                                resolve("Työkalua ei löydy");
+                            }
+                        });
+                    }
+                });
+            }
+        },
+        RemovePersonTool: {
+            type: GraphQLString,
+            args: {
+                Toolid: {
+                    type: GraphQLInt
+                },
+                Personid: {
+                    type: GraphQLInt
+                }
+            },
+            resolve: function (_, args) {
+                if (args.Toolid && args.Personid) {
+                    return new Promise(function (resolve, reject) {
+                        dbSchema.PersonTools.destroy({
+                            where: {
+                                Personid: args.Personid,
+                                Toolid: args.Toolid
+                            }
+                        }).then(function () {
+                            resolve();
+                        });
+                    });
+                } else {
+                    return "Epäonnistui";
+                }
             }
         }
     })

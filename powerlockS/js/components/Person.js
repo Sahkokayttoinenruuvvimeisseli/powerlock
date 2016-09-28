@@ -18,9 +18,11 @@ class Person extends React.Component {
             Firstname: "",
             Lastname: "",
             Tag: "",
-            Selectedtools: [],
+            Tooloptions: [],
+            Persontools: [],
             tagChooserExpanded: false
         }
+        this.loadTools();
         if (this.state.Personid) {
             this.loadPerson(this.props.params.personid);
 
@@ -37,7 +39,7 @@ class Person extends React.Component {
         $.post("./api",
             {
                 query: '{ \
-                    Person:Persons (Personid: ' + personId + ') { Firstname Lastname Tag } \
+                    Person:Persons (Personid: ' + personId + ') { Firstname Lastname Tag Tools { Id Name } } \
                 }'
             }, function (data) {
                 if (data.data.Person) {
@@ -88,20 +90,55 @@ class Person extends React.Component {
         }
     }
 
+    addTool() {
+
+    }
+
+    loadTools() {
+        var that = this;
+
+        $.post("./api", {
+            query: '{ \
+                Tools { Id Name } \
+            }',
+        }, function (data) {
+            if (data.data.Tools) {
+                data.data.Tools.forEach(function (tool) {
+                    that.state.Tooloptions.push({
+                        value: tool.Id,
+                        label: tool.Name
+                    });
+                });
+            }
+        });
+    }
+
+    //loadPersonTools() {
+    //    var that = this;
+
+    //    $.post("./api", {
+    //        query: '{ \
+    //             \
+    //        }'
+    //    }, function (data) {
+
+    //    });
+    //}
+
     createNewPerson() {
         var that = this;
         console.log(this);
         $.post("./api", {
             query: '{ \
-            Person: CreatePerson { Id Firstname Lastname Tag } \
-        }'
+                Person: CreatePerson { Id Firstname Lastname Tag } \
+            }'
         },
             function (data) {
                 if (data.data.Person) {
                     that.setState({
                         Personid: data.data.Person.Id
                     });
-                    this.props.history.push('/person/' + data.data.Person.Id);
+                    that.props.history.push('/person/' + data.data.Person.Id);
                 }
             });
     }
@@ -193,12 +230,64 @@ class Person extends React.Component {
     }
 
     toolsChange(e) {
-        console.log(e);
+        //console.log(e);
+        for (var i = 0; i < this.state.Persontools.length; i++) {
+            var found = false;
+            for (var x = 0; x < e.length; x++) {
+                if (this.state.Persontools[i].value === e[x].value) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                console.log(this.state.Persontools[i]);
+                this.removePersonTool(this.state.Persontools[i].value);
+                this.state.Persontools.splice(i, 1);                
+            }
+        }
+        for (var i = 0; i < e.length; i++) {
+            var found = false;
+            for (var x = 0; x < this.state.Persontools.length; x++) {
+                if (this.state.Persontools[x].value === e[i].value) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                console.log(e[i]);
+                this.insertPersonTool(e[i].value);
+                this.state.Persontools.push(e[i]);                
+            }
+        }
 
-        this.setState({
-            Selectedtools: e
+        this.forceUpdate();
+
+        e.forEach(function (option) {
+
         });
 
+        this.setState({
+            Persontools: e
+        });
+
+    }
+
+    insertPersonTool(toolId) {
+        $.post("./api", {
+            query: '{ \
+            InsertPersonTool(Personid: ' + this.state.Personid + ' Toolid: ' + toolId + ') }'
+        }, function (data) {
+
+        });
+    }
+
+    removePersonTool(toolId) {
+        $.post("./api", {
+            query: '{ \
+            RemovePersonTool(Personid: ' + this.state.Personid + ' Toolid: ' + toolId + ') }'
+        }, function (data) {
+
+        });
     }
 
     render() {
@@ -223,8 +312,8 @@ class Person extends React.Component {
                 <div>
                     <Select
                         name="form-field-name"
-                        value={this.state.Selectedtools}
-                        options={options}
+                        value={this.state.Persontools}
+                        options={this.state.Tooloptions}
                         onChange={this.toolsChange.bind(this)} multi={true}
                         />
                 </div>

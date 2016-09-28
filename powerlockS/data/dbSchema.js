@@ -51,6 +51,20 @@ var ToolUsed = sequelize.define("TooUsed", {
     }
 });
 
+var PersonTools = sequelize.define("PersonTools", {
+    Id: {
+        type: Sequelize.BIGINT,
+        autoIncrement: true,
+        primaryKey: true
+    },
+    Personid: {
+        type: Sequelize.BIGINT
+    },
+    Toolid: {
+        type: Sequelize.BIGINT
+    }
+});
+
 //ToolUsed.hasOne(Person, {
 //    foreignKey: 'Person_id',
 //    constraints: false
@@ -71,3 +85,4 @@ sequelize.sync({ force: false }).then(function () {
 module.exports.Person = Person;
 module.exports.Tool = Tool;
 module.exports.ToolUsed = ToolUsed;
+module.exports.PersonTools = PersonTools;
